@@ -24,7 +24,7 @@ export class TaskFactoryServiceService {
       const task = new Task();
       task.id = this.generateId();
       task.name = options.name;
-      task.color = options.number;
+      task.color = options.color;
       task.startTime = options.startTime;
       task.endTime = options.endTime;
       return task;
