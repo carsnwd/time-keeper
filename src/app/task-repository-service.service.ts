@@ -7,23 +7,27 @@ import * as _ from 'lodash';
 })
 export class TaskRepositoryServiceService {
 
-  constructor() { }
+  private LOCAL_STORAGE_TASKS_ID;
+  private tasks;
 
-  private LOCAL_STORAGE_TASKS_ID = "timeKeeperTasks";
+  constructor() { 
+    this.LOCAL_STORAGE_TASKS_ID = "timeKeeperTasks";
+    localStorage.setItem(this.LOCAL_STORAGE_TASKS_ID, JSON.stringify({}));
+  }
 
-  private setTasksInLocalStorage(tasks:Map<number, Task>): boolean{
+  private setTasksInLocalStorage(tasks:object): boolean{
     localStorage.setItem(this.LOCAL_STORAGE_TASKS_ID, JSON.stringify(tasks));
     return true;
   }
 
-  private getTasksInLocalStorage(): Map<number, Task>{
-    return new Map(JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_TASKS_ID)));
+  private getTasksInLocalStorage(): object{
+    return JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_TASKS_ID));
   }
 
   public addTask(task:Task): boolean{
     let tasks = this.getTasksInLocalStorage();
-    if(task.id && tasks[task.id]){
-      tasks.set(task.id, task);
+    if(task.id && !tasks[task.id]){
+      tasks[task.id] = task;
       this.setTasksInLocalStorage(tasks);
       return true;
     }
@@ -32,8 +36,8 @@ export class TaskRepositoryServiceService {
 
   public removeTask(task:Task): boolean{
     let tasks = this.getTasksInLocalStorage();
-    if(task.id && tasks.get(task.id)){
-      tasks.delete(task.id);
+    if(task.id && tasks[task.id]){
+      delete tasks[task.id];
       this.setTasksInLocalStorage(tasks);
       return true;
     }
@@ -42,15 +46,15 @@ export class TaskRepositoryServiceService {
 
   public updateTask(task:Task): boolean{
     let tasks = this.getTasksInLocalStorage();
-    if(task.id && tasks.get(task.id)){
-      tasks.set(task.id, task);
+    if(task.id && tasks[task.id]){
+      tasks[task.id] = task;
       this.setTasksInLocalStorage(tasks);
       return true;
     }
     return false;
   }
   
-  public getAllTasks(): Map<number, Task>{
+  public getAllTasks(): object{
     return this.getTasksInLocalStorage();
   }
 }
