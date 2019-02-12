@@ -55,25 +55,57 @@ describe('TaskRepositoryServiceService', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith(LOCALSTORAGE_KEY, JSON.stringify(expectedTask));
   });
 
-  it('should remove a task', () =>{
-
+  it('should get all tasks', () =>{
+    service.addTask(task);
+    let tasks = service.getAllTasks();
+    let expectedTasks = {};
+    expectedTasks[task.id] = {
+      _id: task.id,
+      _name: task.name,
+      _color: task.color,
+      _startTime: task.startTime.toISOString(),
+      _endTime: task.endTime.toISOString()
+    };
+    expect(tasks).toEqual(expectedTasks);
   });
 
-  it('should get all tasks', () =>{
-
+  it('should remove a task', () =>{
+    service.addTask(task);
+    let tasks = service.getAllTasks();
+    let expectedTasks = {};
+    expectedTasks[task.id] = {
+      _id: task.id,
+      _name: task.name,
+      _color: task.color,
+      _startTime: task.startTime.toISOString(),
+      _endTime: task.endTime.toISOString()
+    };
+    expect(tasks).toEqual(expectedTasks);
+    const result = service.removeTask(task);
+    expect(result).toBeTruthy();
+    expect(localStorage.setItem).toHaveBeenCalledWith(LOCALSTORAGE_KEY, JSON.stringify({}));
+    tasks = service.getAllTasks();
+    expect(tasks).toEqual({});
   });
 
   describe('should return false if no task found with id', () => {
+    let taskNotInRepo: Task;
+    beforeEach(() => {
+      taskNotInRepo = taskFactoryService.createTask({
+        name: "I dont exist",
+        color: "#FFFFFF",
+        startTime: new Date(1449848371868),
+        endTime: new Date(1549848371868)
+      });
+    });
     it('when removing a task', () =>{
-
+      const result = service.removeTask(taskNotInRepo);
+      expect(result).toBeFalsy();
     });
 
     it('when updating a task', ()=>{
-
-    });
-
-    it('when adding a task', ()=>{
-
+      const result = service.updateTask(taskNotInRepo);
+      expect(result).toBeFalsy();
     });
   })
 });
