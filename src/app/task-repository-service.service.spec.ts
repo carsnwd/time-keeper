@@ -59,13 +59,7 @@ describe('TaskRepositoryServiceService', () => {
     service.addTask(task);
     let tasks = service.getAllTasks();
     let expectedTasks = {};
-    expectedTasks[task.id] = {
-      _id: task.id,
-      _name: task.name,
-      _color: task.color,
-      _startTime: task.startTime.toISOString(),
-      _endTime: task.endTime.toISOString()
-    };
+    expectedTasks[task.id] = task;
     expect(tasks).toEqual(expectedTasks);
   });
 
@@ -73,13 +67,7 @@ describe('TaskRepositoryServiceService', () => {
     service.addTask(task);
     let tasks = service.getAllTasks();
     let expectedTasks = {};
-    expectedTasks[task.id] = {
-      _id: task.id,
-      _name: task.name,
-      _color: task.color,
-      _startTime: task.startTime.toISOString(),
-      _endTime: task.endTime.toISOString()
-    };
+    expectedTasks[task.id] = task;
     expect(tasks).toEqual(expectedTasks);
     const result = service.removeTask(task);
     expect(result).toBeTruthy();

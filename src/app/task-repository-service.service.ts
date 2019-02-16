@@ -8,11 +8,12 @@ import * as _ from 'lodash';
 export class TaskRepositoryServiceService {
 
   private LOCAL_STORAGE_TASKS_ID;
-  private tasks;
+  private tasks: object;
 
   constructor() { 
     this.LOCAL_STORAGE_TASKS_ID = "timeKeeperTasks";
-    localStorage.setItem(this.LOCAL_STORAGE_TASKS_ID, JSON.stringify({}));
+    let tasksObject = this.getTasksInLocalStorage();
+    this.tasks = this.convertTasksObjectToTaskClassHashMap(tasksObject)
   }
 
   private setTasksInLocalStorage(tasks:object): boolean{
@@ -21,40 +22,56 @@ export class TaskRepositoryServiceService {
   }
 
   private getTasksInLocalStorage(): object{
-    return JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_TASKS_ID));
+    let tasksObjectString = localStorage.getItem(this.LOCAL_STORAGE_TASKS_ID)
+    if(_.isNil(tasksObjectString)){
+      this.setTasksInLocalStorage({});
+      return {};
+    }
+    return JSON.parse(tasksObjectString);
+  }
+
+  private convertTasksObjectToTaskClassHashMap(tasksObject): object{
+    let tasks = {};
+    _.forEach(tasksObject, function(taskObject: any){
+      let task = new Task();
+      task.id = taskObject.id;
+      task.name = taskObject.name;
+      task.startTime = new Date(taskObject.startTime);
+      task.endTime = new Date(taskObject.endTime);
+      task.color = taskObject.color;
+      tasks[taskObject.id] = task;
+    })
+    return tasks;
   }
 
   public addTask(task:Task): boolean{
-    let tasks = this.getTasksInLocalStorage();
-    if(task.id && !tasks[task.id]){
-      tasks[task.id] = task;
-      this.setTasksInLocalStorage(tasks);
+    if(task.id && !this.tasks[task.id]){
+      this.tasks[task.id] = task;
+      this.setTasksInLocalStorage(this.tasks);
       return true;
     }
     return false;
   }
 
   public removeTask(task:Task): boolean{
-    let tasks = this.getTasksInLocalStorage();
-    if(task.id && tasks[task.id]){
-      delete tasks[task.id];
-      this.setTasksInLocalStorage(tasks);
+    if(task.id && this.tasks[task.id]){
+      delete this.tasks[task.id];
+      this.setTasksInLocalStorage(this.tasks);
       return true;
     }
     return false;
   }
 
   public updateTask(task:Task): boolean{
-    let tasks = this.getTasksInLocalStorage();
-    if(task.id && tasks[task.id]){
-      tasks[task.id] = task;
-      this.setTasksInLocalStorage(tasks);
+    if(task.id && this.tasks[task.id]){
+      this.tasks[task.id] = task;
+      this.setTasksInLocalStorage(this.tasks);
       return true;
     }
     return false;
   }
   
   public getAllTasks(): object{
-    return this.getTasksInLocalStorage();
+    return this.tasks;
   }
 }
