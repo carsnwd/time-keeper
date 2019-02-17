@@ -3,20 +3,34 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TaskDetailsComponent } from './task-details/task-details.component';
 import { TaskListComponent } from './task-list/task-list.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskDetailsComponent,
-    TaskListComponent
+    TaskListComponent,
+    TaskDialogComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NoopAnimationsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TaskDialogComponent]
 })
 export class AppModule { }
