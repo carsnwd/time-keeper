@@ -3,7 +3,6 @@ import { TaskRepositoryServiceService } from '../task-repository-service.service
 import { Task } from '../models/task';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
-import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'task-list',
