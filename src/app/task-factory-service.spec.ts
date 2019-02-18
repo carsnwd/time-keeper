@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TaskFactoryServiceService } from './task-factory-service.service';
+import { TaskFactoryService } from './task-factory-service';
 
-describe('TaskFactoryServiceService', () => {
-  let service: TaskFactoryServiceService;
+describe('TaskFactoryService', () => {
+  let service: TaskFactoryService;
   beforeEach(() => {
-    service = new TaskFactoryServiceService();
+    service = new TaskFactoryService();
   });
 
   it('createTask - should create a new task', () => {

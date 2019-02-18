@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { TaskRepositoryServiceService } from './task-repository-service.service';
 import { Task } from './models/task';
-import { TaskFactoryServiceService } from './task-factory-service.service';
+import { TaskFactoryService } from './task-factory-service';
 
 describe('TaskRepositoryServiceService', () => {
   let service: TaskRepositoryServiceService;
-  let taskFactoryService: TaskFactoryServiceService;
+  let taskFactoryService: TaskFactoryService;
   let task: Task;
   const LOCALSTORAGE_KEY = "timeKeeperTasks";
 
@@ -23,7 +23,7 @@ describe('TaskRepositoryServiceService', () => {
 
   //setup mock tasks and task factory
   beforeEach(() => {
-    taskFactoryService = new TaskFactoryServiceService();
+    taskFactoryService = new TaskFactoryService();
     task = taskFactoryService.createTask({
       name: "My Task",
       color: "#FFFFFF",

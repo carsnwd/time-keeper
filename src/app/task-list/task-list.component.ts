@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskRepositoryServiceService } from '../task-repository-service.service';
+import { TaskFactoryService } from '../task-factory-service';
 import { Task } from '../models/task';
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog } from "@angular/material";
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 
 @Component({
@@ -13,11 +14,17 @@ export class TaskListComponent{
 
   tasks: Object;
 
-  constructor(private taskRepositoryService: TaskRepositoryServiceService, private createTaskDialog: MatDialog){
+  constructor(private taskRepositoryService: TaskRepositoryServiceService, private taskFactoryService: TaskFactoryService, private createTaskDialog: MatDialog){
     this.tasks = taskRepositoryService.getAllTasks();
   }
 
-  public createTask(): boolean{
+  public createTask(task): boolean{
+    const taskObject = this.taskFactoryService.createTask({
+      name: task.name,
+      color: task.color,
+      startTime: new Date()
+    });
+    console.log(taskObject);
     return true;
   }
 
@@ -42,9 +49,11 @@ export class TaskListComponent{
   }
 
   public openCreateTaskDialog(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-
-    this.createTaskDialog.open(TaskDialogComponent, dialogConfig);
+    let dialogRef = this.createTaskDialog.open(TaskDialogComponent);
+    dialogRef.afterClosed().subscribe((data) => {
+      if(data){
+        this.createTask(data);
+      }
+    });
   }
 }

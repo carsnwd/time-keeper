@@ -4,7 +4,7 @@ import { Task } from './models/task';
 @Injectable({
   providedIn: 'root'
 })
-export class TaskFactoryServiceService {
+export class TaskFactoryService {
 
   constructor() { }
 
@@ -13,7 +13,7 @@ export class TaskFactoryServiceService {
   }
 
   private verifyTaskOptions(options): boolean{
-    if(options.name && options.color && options.startTime && options.endTime){
+    if(options.name && options.color && options.startTime){
       return true;
     }
     throw new Error("Invalid parameters provided for the task. Requires name, color, startTime, endTime");

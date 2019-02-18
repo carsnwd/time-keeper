@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-task-dialog',
@@ -18,12 +18,12 @@ export class TaskDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: [name, []]
+      name: new FormControl(''),
+      color: new FormControl('')
     })
   }
 
   public save(){
-    console.log(this.form.value);
     this.dialogRef.close(this.form.value);
   }
 
