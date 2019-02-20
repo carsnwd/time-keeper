@@ -24,7 +24,7 @@ export class TaskListComponent{
       color: task.color,
       startTime: new Date()
     });
-    console.log(taskObject);
+    this.taskRepositoryService.addTask(taskObject);
     return true;
   }
 

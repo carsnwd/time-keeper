@@ -12,8 +12,7 @@ export class TaskRepositoryServiceService {
 
   constructor() { 
     this.LOCAL_STORAGE_TASKS_ID = "timeKeeperTasks";
-    let tasksObject = this.getTasksInLocalStorage();
-    this.tasks = this.convertTasksObjectToTaskClassHashMap(tasksObject)
+    this.tasks = this.getTasksInLocalStorage();
   }
 
   private setTasksInLocalStorage(tasks:object): boolean{
@@ -28,20 +27,6 @@ export class TaskRepositoryServiceService {
       return {};
     }
     return JSON.parse(tasksObjectString);
-  }
-
-  private convertTasksObjectToTaskClassHashMap(tasksObject): object{
-    let tasks = {};
-    _.forEach(tasksObject, function(taskObject: any){
-      let task = new Task();
-      task.id = taskObject.id;
-      task.name = taskObject.name;
-      task.startTime = new Date(taskObject.startTime);
-      task.endTime = new Date(taskObject.endTime);
-      task.color = taskObject.color;
-      tasks[taskObject.id] = task;
-    })
-    return tasks;
   }
 
   public addTask(task:Task): boolean{
