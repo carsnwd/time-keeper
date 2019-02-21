@@ -20,14 +20,14 @@ export class TaskDialogComponent implements OnInit {
     this.form = this.fb.group({
       name: new FormControl(''),
       color: new FormControl('')
-    })
+    });
   }
 
   public save(){
     this.dialogRef.close(this.form.value);
   }
 
-  public close(): void{
+  public close(): void {
     this.dialogRef.close();
   }
 

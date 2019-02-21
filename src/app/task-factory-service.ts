@@ -12,15 +12,15 @@ export class TaskFactoryService {
     return Math.floor(Math.random() * 99999);
   }
 
-  private verifyTaskOptions(options): boolean{
-    if(options.name && options.color){
+  private verifyTaskOptions(options): boolean {
+    if (options.name && options.color) {
       return true;
     }
-    throw new Error("Invalid parameters provided for the task. Requires name, color, startTime, endTime");
+    throw new Error('Invalid parameters provided for the task. Requires name, color, startTime, endTime');
   }
 
-  public createTask(options): Task{
-    if(this.verifyTaskOptions(options)){
+  public createTask(options): Task {
+    if (this.verifyTaskOptions(options)) {
       const task = new Task();
       task.id = this.generateId();
       task.name = options.name;
@@ -31,7 +31,7 @@ export class TaskFactoryService {
     }
   }
 
-  public cloneTaskObjectToTaskClass(taskObject: any): Task{
+  public cloneTaskObjectToTaskClass(taskObject: any): Task {
     const task = new Task();
     task.id = taskObject._id;
     task.name = taskObject._name;
