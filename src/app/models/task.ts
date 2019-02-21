@@ -1,25 +1,26 @@
 export class Task{
+// tslint:disable: variable-name
     private _id: number;
     private _name: string;
     private _color: string;
-    private _startTime: Date;
-    private _endTime: Date;
+    private _startTime: number;
+    private _endTime: number;
     public get id(): number {
         return this._id;
     }
     public set id(value: number) {
         this._id = value;
     }
-    public get endTime(): Date {
+    public get endTime(): number {
         return this._endTime;
     }
-    public set endTime(value: Date) {
+    public set endTime(value: number) {
         this._endTime = value;
     }
-    public get startTime(): Date {
+    public get startTime(): number {
         return this._startTime;
     }
-    public set startTime(value: Date) {
+    public set startTime(value: number) {
         this._startTime = value;
     }
     public get color(): string {

@@ -45,16 +45,19 @@ export class TaskListComponent {
     return this.taskRepositoryService.removeTask(task);
   }
 
-  public startTask(task: Task): boolean {
-    return true;
+  public startTask(task: Task): void {
+    task.startTime = new Date().getMilliseconds();
+    this.taskRepositoryService.updateTask(task);
   }
 
-  public stopTask(task: Task): boolean {
-    return true;
+  public stopTask(task: Task): void {
+    task.endTime = new Date().getMilliseconds();
   }
 
-  public resetTask(task: Task): boolean {
-    return true;
+  public resetTask(task: Task): void {
+    task.startTime = null;
+    task.endTime = null;
+    this.taskRepositoryService.updateTask(task);
   }
 
   public getTotalTime(): number {
@@ -66,6 +69,15 @@ export class TaskListComponent {
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
         this.createTask(data);
+      }
+    });
+  }
+
+  public openTaskUpdateDialog(): void {
+    const dialogRef = this.taskInputDialog.open(TaskDialogComponent);
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.updateTask(data);
       }
     });
   }

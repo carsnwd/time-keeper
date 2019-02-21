@@ -37,7 +37,7 @@ export class TaskFactoryService {
     task.name = taskObject._name;
     task.color = taskObject._color;
     task.startTime = taskObject._startTime;
-    task.endTime = taskObject._endTIme;
+    task.endTime = taskObject._endTime;
     return task;
   }
 }
