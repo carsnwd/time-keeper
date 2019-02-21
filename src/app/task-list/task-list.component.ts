@@ -17,11 +17,11 @@ export class TaskListComponent {
   constructor(
     private taskRepositoryService: TaskRepositoryServiceService,
     private taskFactoryService: TaskFactoryService,
-    private createTaskDialog: MatDialog) {
+    private taskInputDialog: MatDialog) {
     this.tasks = taskRepositoryService.getAllTasks();
   }
 
-  public createTask(task): boolean {
+  public createTask(task: { name: string; color: string; }): boolean {
     const taskObject = this.taskFactoryService.createTask({
       name: task.name,
       color: task.color
@@ -30,12 +30,18 @@ export class TaskListComponent {
     return true;
   }
 
-  public updateTask(): boolean {
-    return true;
+  public updateTask(task: Task): void {
+    const dialogRef = this.taskInputDialog.open(TaskDialogComponent);
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        task.color = data.color;
+        task.name = data.name;
+        this.taskRepositoryService.updateTask(task);
+      }
+    });
   }
 
-  public removeTask(taskObject): boolean {
-    const task = taskObject as Task;
+  public removeTask(task: Task): boolean {
     return this.taskRepositoryService.removeTask(task);
   }
 
@@ -51,8 +57,8 @@ export class TaskListComponent {
     return 0;
   }
 
-  public openCreateTaskDialog(): void {
-    const dialogRef = this.createTaskDialog.open(TaskDialogComponent);
+  public openTaskInputDialog(): void {
+    const dialogRef = this.taskInputDialog.open(TaskDialogComponent);
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
         this.createTask(data);
