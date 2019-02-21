@@ -1,2 +1,4 @@
-{{tasks | json}}<br>
-<button mat-button (click)="openCreateTaskDialog()">Create New Task</button>
+<ul>
+    <li *ngFor="let task of tasks | keyvalue">{{task.value._name}} - {{task.value._color}} <button mat-button color="warn" (click)="removeTask(task.value)">Remove</button></li>
+</ul>
+<button mat-button color="primary" (click)="openCreateTaskDialog()">Create New Task</button>

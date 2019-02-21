@@ -21,8 +21,7 @@ export class TaskListComponent{
   public createTask(task): boolean{
     const taskObject = this.taskFactoryService.createTask({
       name: task.name,
-      color: task.color,
-      startTime: new Date()
+      color: task.color
     });
     this.taskRepositoryService.addTask(taskObject);
     return true;
@@ -32,8 +31,9 @@ export class TaskListComponent{
     return true;
   }
 
-  public removeTask(): boolean{
-    return true;
+  public removeTask(taskObject): boolean{
+    const task = taskObject as Task;
+    return this.taskRepositoryService.removeTask(task);
   }
 
   public startTask(task: Task): boolean{

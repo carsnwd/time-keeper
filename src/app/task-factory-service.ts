@@ -13,7 +13,7 @@ export class TaskFactoryService {
   }
 
   private verifyTaskOptions(options): boolean{
-    if(options.name && options.color && options.startTime){
+    if(options.name && options.color){
       return true;
     }
     throw new Error("Invalid parameters provided for the task. Requires name, color, startTime, endTime");
@@ -29,5 +29,15 @@ export class TaskFactoryService {
       task.endTime = options.endTime;
       return task;
     }
+  }
+
+  public cloneTaskObjectToTaskClass(taskObject: any): Task{
+    const task = new Task();
+    task.id = taskObject._id;
+    task.name = taskObject._name;
+    task.color = taskObject._color;
+    task.startTime = taskObject._startTime;
+    task.endTime = taskObject._endTIme;
+    return task;
   }
 }

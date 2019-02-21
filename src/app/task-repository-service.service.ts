@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from './models/task';
 import * as _ from 'lodash';
+import { TaskFactoryService } from './task-factory-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class TaskRepositoryServiceService {
   private LOCAL_STORAGE_TASKS_ID;
   private tasks: object;
 
-  constructor() { 
+  constructor(private taskFactoryService: TaskFactoryService) { 
     this.LOCAL_STORAGE_TASKS_ID = "timeKeeperTasks";
     this.tasks = this.getTasksInLocalStorage();
   }
@@ -26,7 +27,18 @@ export class TaskRepositoryServiceService {
       this.setTasksInLocalStorage({});
       return {};
     }
-    return JSON.parse(tasksObjectString);
+    return this.parseObjecTaskIntoTypeScriptTaskCLass(JSON.parse(tasksObjectString));
+  }
+
+  private parseObjecTaskIntoTypeScriptTaskCLass(tasksObject: any){
+    const returnTasks = {};
+    const that = this;
+    if(!_.isEmpty(tasksObject)){
+      _.forEach(tasksObject, function(taskObject){
+        returnTasks[taskObject._id] = that.taskFactoryService.cloneTaskObjectToTaskClass(taskObject);
+      });
+    }
+    return returnTasks;
   }
 
   public addTask(task:Task): boolean{
