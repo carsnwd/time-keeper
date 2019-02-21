@@ -53,6 +53,10 @@ export class TaskListComponent {
     return true;
   }
 
+  public resetTask(task: Task): boolean {
+    return true;
+  }
+
   public getTotalTime(): number {
     return 0;
   }
