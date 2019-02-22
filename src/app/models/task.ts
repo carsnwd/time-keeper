@@ -5,6 +5,7 @@ export class Task{
     private _color: string;
     private _startTime: number;
     private _endTime: number;
+    private _isActive: boolean;
     public get id(): number {
         return this._id;
     }
@@ -34,5 +35,11 @@ export class Task{
     }
     public set name(value: string) {
         this._name = value;
+    }
+    public get isActive(): boolean {
+        return this._isActive;
+    }
+    public set isActive(value: boolean) {
+        this._isActive = value;
     }
 }

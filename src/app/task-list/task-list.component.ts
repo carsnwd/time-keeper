@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Pipe, PipeTransform } from '@angular/core';
 import { TaskRepositoryServiceService } from '../task-repository-service.service';
 import { TaskFactoryService } from '../task-factory-service';
 import { Task } from '../models/task';
 import { MatDialog } from '@angular/material';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-task-list',
@@ -45,13 +46,18 @@ export class TaskListComponent {
     return this.taskRepositoryService.removeTask(task);
   }
 
-  public startTask(task: Task): void {
-    task.startTime = new Date().getMilliseconds();
+  public startTask(task: any): void {
+    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
+    task.startTime = new Date().getTime();
+    task.isActive = true;
     this.taskRepositoryService.updateTask(task);
   }
 
-  public stopTask(task: Task): void {
-    task.endTime = new Date().getMilliseconds();
+  public stopTask(task: any): void {
+    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
+    task.endTime = new Date().getTime();
+    task.isActive = false;
+    this.taskRepositoryService.updateTask(task);
   }
 
   public resetTask(task: Task): void {
@@ -61,7 +67,11 @@ export class TaskListComponent {
   }
 
   public getTotalTime(): number {
-    return 0;
+    let totalTime = 0;
+    _.forEach(this.taskRepositoryService.getAllTasks(), (task: Task) => {
+      totalTime = totalTime + (task.endTime - task.startTime);
+    });
+    return totalTime;
   }
 
   public openTaskInputDialog(): void {
@@ -80,5 +90,14 @@ export class TaskListComponent {
         this.updateTask(data);
       }
     });
+  }
+
+  public runningTime(task: any): number{
+    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
+    if (task.isActive) {
+      const currentTime = new Date().getTime();
+      return currentTime - task.startTime;
+    }
+    return task.endTime - task.startTime;
   }
 }
