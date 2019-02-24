@@ -9,6 +9,7 @@ export class Task{
     private _endTime: number;
     private _isActive: boolean;
     private _runningTime: number;
+    private _previousRunningTime: number;
     public get id(): number {
         return this._id;
     }
@@ -51,4 +52,11 @@ export class Task{
     public set runningTime(value) {
         this._runningTime = value;
     }
+    public get previousRunningTime(): number {
+        return this._previousRunningTime;
+    }
+    public set previousRunningTime(value) {
+        this._previousRunningTime = value;
+    }
+
 }

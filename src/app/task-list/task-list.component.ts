@@ -37,9 +37,9 @@ export class TaskListComponent implements OnInit {
     this.totalTime = 0;
     _.forEach(this.tasks, (task: Task) => {
       if (task.isActive) {
-          task.runningTime = Date.now() - task.startTime;
+          task.runningTime = (Date.now() - task.startTime) + task.previousRunningTime;
       } else {
-        task.runningTime = task.endTime - task.startTime;
+        task.runningTime = task.previousRunningTime;
       }
       this.totalTime = task.runningTime + this.totalTime;
       this.taskRepositoryService.updateTask(task);
@@ -72,15 +72,16 @@ export class TaskListComponent implements OnInit {
 
   public startTask(task: any): void {
     task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
-    task.startTime = new Date().getTime();
+    task.startTime = Date.now();
     task.isActive = true;
     this.taskRepositoryService.updateTask(task);
   }
 
   public stopTask(task: any): void {
     task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
-    task.endTime = new Date().getTime();
+    task.endTime = Date.now();
     task.isActive = false;
+    task.previousRunningTime = task.runningTime;
     this.taskRepositoryService.updateTask(task);
   }
 

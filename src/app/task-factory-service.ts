@@ -29,6 +29,7 @@ export class TaskFactoryService {
       task.endTime = options.endTime;
       task.isActive = options.isActive || false;
       task.runningTime = 0;
+      task.previousRunningTime = 0;
       return task;
     }
   }
@@ -42,6 +43,7 @@ export class TaskFactoryService {
     task.endTime = taskObject._endTime;
     task.isActive = taskObject._isActive;
     task.runningTime = taskObject._runningTime;
+    task.previousRunningTime = taskObject._previousRunningTime;
     return task;
   }
 }

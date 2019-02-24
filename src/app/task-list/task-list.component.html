@@ -3,7 +3,8 @@
         {{task.value._name}} - {{task.value._color}} <span *ngIf="task.value.startTime">- {{task.value._runningTime}}</span>
         <button mat-button color="warn" (click)="removeTask(task.value)">Remove</button>
         <button mat-button (click)="updateTask(task.value)">Update</button>
-        <button mat-button (click)="startTask(task)">Start</button>
+        <button mat-button *ngIf="!task.value.isActive" (click)="startTask(task)">Start</button>
+        <button mat-button *ngIf="task.value.isActive" (click)="stopTask(task)">Stop</button>
     </li>
 </ul>
 <h3>Total Time: {{totalTime}}</h3>
