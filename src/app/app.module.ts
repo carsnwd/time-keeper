@@ -12,12 +12,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { TimeFormatPipe } from './time-format.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskListComponent,
-    TaskDialogComponent
+    TaskDialogComponent,
+    TimeFormatPipe
   ],
   imports: [
     BrowserModule,

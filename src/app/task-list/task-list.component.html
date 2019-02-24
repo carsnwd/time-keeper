@@ -1,11 +1,12 @@
 <ul>
     <li *ngFor="let task of tasks | keyvalue">
-        {{task.value._name}} - {{task.value._color}} <span *ngIf="task.value.startTime">- {{task.value._runningTime}}</span>
+        {{task.value._name}} - {{task.value._color}} <span *ngIf="task.value.startTime">- {{task.value._runningTime | timeFormat}}</span>
         <button mat-button color="warn" (click)="removeTask(task.value)">Remove</button>
         <button mat-button (click)="updateTask(task.value)">Update</button>
-        <button mat-button *ngIf="!task.value.isActive" (click)="startTask(task)">Start</button>
-        <button mat-button *ngIf="task.value.isActive" (click)="stopTask(task)">Stop</button>
+        <button mat-button *ngIf="!task.value.isActive" (click)="startTask(task.value)">Start</button>
+        <button mat-button *ngIf="task.value.isActive" (click)="stopTask(task.value)">Stop</button>
+        <button mat-button (click)="resetTask(task.value)">Reset</button>
     </li>
 </ul>
-<h3>Total Time: {{totalTime}}</h3>
+<h3>Total Time: {{totalTime | timeFormat}}</h3>
 <button mat-button color="primary" (click)="openTaskInputDialog()">Create New Task</button>

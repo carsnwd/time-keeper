@@ -6,12 +6,13 @@ import { MatDialog } from '@angular/material';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import * as _ from 'lodash';
 import { Observable, timer } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { TimeFormatPipe } from '../time-format.pipe';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.less']
+  styleUrls: ['./task-list.component.less'],
+  providers: [TimeFormatPipe]
 })
 export class TaskListComponent implements OnInit {
   tasks: object;
@@ -70,15 +71,15 @@ export class TaskListComponent implements OnInit {
     return this.taskRepositoryService.removeTask(task);
   }
 
-  public startTask(task: any): void {
-    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
+  public startTask(task: Task): void {
+    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task);
     task.startTime = Date.now();
     task.isActive = true;
     this.taskRepositoryService.updateTask(task);
   }
 
-  public stopTask(task: any): void {
-    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
+  public stopTask(task: Task): void {
+    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task);
     task.endTime = Date.now();
     task.isActive = false;
     task.previousRunningTime = task.runningTime;
@@ -86,8 +87,12 @@ export class TaskListComponent implements OnInit {
   }
 
   public resetTask(task: Task): void {
-    task.startTime = null;
-    task.endTime = null;
+    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task);
+    task.startTime = Date.now();
+    task.endTime = Date.now();
+    task.isActive = false;
+    task.previousRunningTime = 0;
+    task.runningTime = 0;
     this.taskRepositoryService.updateTask(task);
   }
 
