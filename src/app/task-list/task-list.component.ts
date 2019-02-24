@@ -49,8 +49,7 @@ export class TaskListComponent implements OnInit {
 
   public createTask(task: { name: string; color: string; }): boolean {
     const taskObject = this.taskFactoryService.createTask({
-      name: task.name,
-      color: task.color
+      name: task.name
     });
     this.taskRepositoryService.addTask(taskObject);
     return true;
@@ -60,7 +59,6 @@ export class TaskListComponent implements OnInit {
     const dialogRef = this.taskInputDialog.open(TaskDialogComponent);
     dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        task.color = data.color;
         task.name = data.name;
         this.taskRepositoryService.updateTask(task);
       }

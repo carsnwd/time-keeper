@@ -13,10 +13,10 @@ export class TaskFactoryService {
   }
 
   private verifyTaskOptions(options): boolean {
-    if (options.name && options.color) {
+    if (options.name) {
       return true;
     }
-    throw new Error('Invalid parameters provided for the task. Requires name and color');
+    throw new Error('Invalid parameters provided for the task. Requires name');
   }
 
   public createTask(options): Task {
@@ -24,7 +24,6 @@ export class TaskFactoryService {
       const task = new Task();
       task.id = this.generateId();
       task.name = options.name;
-      task.color = options.color;
       task.startTime = options.startTime;
       task.endTime = options.endTime;
       task.isActive = options.isActive || false;
@@ -38,7 +37,6 @@ export class TaskFactoryService {
     const task = new Task();
     task.id = taskObject._id;
     task.name = taskObject._name;
-    task.color = taskObject._color;
     task.startTime = taskObject._startTime;
     task.endTime = taskObject._endTime;
     task.isActive = taskObject._isActive;

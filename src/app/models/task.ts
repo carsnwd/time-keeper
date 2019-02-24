@@ -28,12 +28,6 @@ export class Task{
     public set startTime(value: number) {
         this._startTime = value;
     }
-    public get color(): string {
-        return this._color;
-    }
-    public set color(value: string) {
-        this._color = value;
-    }
     public get name(): string {
         return this._name;
     }

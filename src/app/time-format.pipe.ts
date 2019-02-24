@@ -9,19 +9,19 @@ import { PipeTransform, Pipe } from '@angular/core';
         let minutesString = '00';
         let hoursString = '00';
 
-        if (hours > 10) {
+        if (hours > 9) {
             hoursString = hours.toString();
         } else {
             hoursString = '0' + hours;
         }
 
-        if (minutes > 10) {
+        if (minutes > 9) {
             minutesString = minutes.toString();
         } else {
             minutesString = '0' + minutes;
         }
 
-        if (seconds > 10) {
+        if (seconds > 9) {
             secondsString = seconds.toString();
         } else {
             secondsString = '0' + seconds;
