@@ -47,6 +47,15 @@ export class TaskListComponent implements OnInit {
     });
   }
 
+  private stopRunningTasks(): void {
+    _.forEach(this.tasks, (task: Task) => {
+      if (task.isActive) {
+        this.stopTask(task);
+        return false;
+      }
+    });
+  }
+
   public createTask(task: { name: string; color: string; }): boolean {
     const taskObject = this.taskFactoryService.createTask({
       name: task.name
@@ -70,6 +79,7 @@ export class TaskListComponent implements OnInit {
   }
 
   public startTask(task: Task): void {
+    this.stopRunningTasks();
     task = this.taskFactoryService.cloneTaskObjectToTaskClass(task);
     task.startTime = Date.now();
     task.isActive = true;

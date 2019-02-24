@@ -6,8 +6,8 @@
                     {{task.value._name}} <span *ngIf="task.value.startTime">- {{task.value._runningTime | timeFormat}}</span>
             </div>
             <div class="col-sm">
-                    <button mat-flat-button color="warn" (click)="removeTask(task.value)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                    <button mat-flat-button (click)="updateTask(task.value)"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                    <button mat-flat-button (click)="removeTask(task.value)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    <button mat-flat-button (click)="updateTask(task.value)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <button mat-flat-button *ngIf="!task.value.isActive" (click)="startTask(task.value)"><i class="fa fa-play" aria-hidden="true"></i></button>
                     <button mat-flat-button *ngIf="task.value.isActive" (click)="stopTask(task.value)"><i class="fa fa-stop" aria-hidden="true"></i></button>
                     <button mat-flat-button (click)="resetTask(task.value)"><i class="fa fa-backward" aria-hidden="true"></i></button>
@@ -15,5 +15,5 @@
         </div>
     </div>
     <h3>Total Time: {{totalTime | timeFormat}}</h3>
-    <button mat-flat-button color="primary" (click)="openTaskInputDialog()">Create New Task</button>
+    <button mat-flat-button color="primary" id="newTaskButton" (click)="openTaskInputDialog()">Create New Task</button>
 </div>
