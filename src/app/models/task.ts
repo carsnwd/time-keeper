@@ -1,3 +1,5 @@
+import { timer, Observable } from 'rxjs';
+
 export class Task{
 // tslint:disable: variable-name
     private _id: number;
@@ -6,6 +8,7 @@ export class Task{
     private _startTime: number;
     private _endTime: number;
     private _isActive: boolean;
+    private _runningTime: {time: number};
     public get id(): number {
         return this._id;
     }
@@ -41,5 +44,11 @@ export class Task{
     }
     public set isActive(value: boolean) {
         this._isActive = value;
+    }
+    public get runningTime(): {time: number} {
+        return this._runningTime;
+    }
+    public set runningTime(value) {
+        this._runningTime = value;
     }
 }

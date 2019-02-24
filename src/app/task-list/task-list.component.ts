@@ -1,25 +1,45 @@
-import { Component, Pipe, PipeTransform } from '@angular/core';
+import { Component, Pipe, PipeTransform, OnInit, OnDestroy } from '@angular/core';
 import { TaskRepositoryServiceService } from '../task-repository-service.service';
 import { TaskFactoryService } from '../task-factory-service';
 import { Task } from '../models/task';
 import { MatDialog } from '@angular/material';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import * as _ from 'lodash';
+import { Observable, timer } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.less']
 })
-export class TaskListComponent {
-
+export class TaskListComponent implements OnInit {
   tasks: object;
+  taskUpdater: Observable<number>;
 
   constructor(
     private taskRepositoryService: TaskRepositoryServiceService,
     private taskFactoryService: TaskFactoryService,
     private taskInputDialog: MatDialog) {
     this.tasks = taskRepositoryService.getAllTasks();
+  }
+
+  ngOnInit(): void {
+    this.taskUpdater = timer(1000, 1000);
+    this.taskUpdater.subscribe(tick => {
+      this.calculateTaskRunTimes();
+    });
+  }
+
+  private calculateTaskRunTimes(): void{
+    _.forEach(this.tasks, (task: Task) => {
+      if (task.isActive) {
+          Object.assign(task.runningTime, {time: Date.now() - task.startTime});
+      } else {
+        Object.assign(task.runningTime, {time: task.endTime - task.startTime});
+      }
+      this.taskRepositoryService.updateTask(task);
+    });
   }
 
   public createTask(task: { name: string; color: string; }): boolean {
@@ -66,14 +86,6 @@ export class TaskListComponent {
     this.taskRepositoryService.updateTask(task);
   }
 
-  public getTotalTime(): number {
-    let totalTime = 0;
-    _.forEach(this.taskRepositoryService.getAllTasks(), (task: Task) => {
-      totalTime = totalTime + (task.endTime - task.startTime);
-    });
-    return totalTime;
-  }
-
   public openTaskInputDialog(): void {
     const dialogRef = this.taskInputDialog.open(TaskDialogComponent);
     dialogRef.afterClosed().subscribe((data) => {
@@ -90,14 +102,5 @@ export class TaskListComponent {
         this.updateTask(data);
       }
     });
-  }
-
-  public runningTime(task: any): number{
-    task = this.taskFactoryService.cloneTaskObjectToTaskClass(task.value);
-    if (task.isActive) {
-      const currentTime = new Date().getTime();
-      return currentTime - task.startTime;
-    }
-    return task.endTime - task.startTime;
   }
 }

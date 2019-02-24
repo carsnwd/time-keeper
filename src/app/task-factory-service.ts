@@ -28,6 +28,7 @@ export class TaskFactoryService {
       task.startTime = options.startTime;
       task.endTime = options.endTime;
       task.isActive = options.isActive || false;
+      task.runningTime = {time: Date.now()};
       return task;
     }
   }
@@ -40,6 +41,7 @@ export class TaskFactoryService {
     task.startTime = taskObject._startTime;
     task.endTime = taskObject._endTime;
     task.isActive = taskObject._isActive;
+    task.runningTime = taskObject._runningTime;
     return task;
   }
 }
