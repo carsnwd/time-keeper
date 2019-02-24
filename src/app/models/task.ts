@@ -8,7 +8,7 @@ export class Task{
     private _startTime: number;
     private _endTime: number;
     private _isActive: boolean;
-    private _runningTime: {time: number};
+    private _runningTime: number;
     public get id(): number {
         return this._id;
     }
@@ -45,7 +45,7 @@ export class Task{
     public set isActive(value: boolean) {
         this._isActive = value;
     }
-    public get runningTime(): {time: number} {
+    public get runningTime(): number {
         return this._runningTime;
     }
     public set runningTime(value) {

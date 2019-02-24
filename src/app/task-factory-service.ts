@@ -28,7 +28,7 @@ export class TaskFactoryService {
       task.startTime = options.startTime;
       task.endTime = options.endTime;
       task.isActive = options.isActive || false;
-      task.runningTime = {time: Date.now()};
+      task.runningTime = 0;
       return task;
     }
   }

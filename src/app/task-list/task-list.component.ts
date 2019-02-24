@@ -16,12 +16,14 @@ import { flatMap } from 'rxjs/operators';
 export class TaskListComponent implements OnInit {
   tasks: object;
   taskUpdater: Observable<number>;
+  totalTime: number;
 
   constructor(
     private taskRepositoryService: TaskRepositoryServiceService,
     private taskFactoryService: TaskFactoryService,
     private taskInputDialog: MatDialog) {
     this.tasks = taskRepositoryService.getAllTasks();
+    this.totalTime = 0;
   }
 
   ngOnInit(): void {
@@ -31,13 +33,15 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  private calculateTaskRunTimes(): void{
+  private calculateTaskRunTimes(): void {
+    this.totalTime = 0;
     _.forEach(this.tasks, (task: Task) => {
       if (task.isActive) {
-          Object.assign(task.runningTime, {time: Date.now() - task.startTime});
+          task.runningTime = Date.now() - task.startTime;
       } else {
-        Object.assign(task.runningTime, {time: task.endTime - task.startTime});
+        task.runningTime = task.endTime - task.startTime;
       }
+      this.totalTime = task.runningTime + this.totalTime;
       this.taskRepositoryService.updateTask(task);
     });
   }
