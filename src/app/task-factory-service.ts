@@ -13,7 +13,7 @@ export class TaskFactoryService {
   }
 
   private verifyTaskOptions(options): boolean {
-    if (options.name) {
+    if (options.name || options._name) {
       return true;
     }
     throw new Error('Invalid parameters provided for the task. Requires name');
@@ -34,14 +34,16 @@ export class TaskFactoryService {
   }
 
   public cloneTaskObjectToTaskClass(taskObject: any): Task {
-    const task = new Task();
-    task.id = taskObject._id;
-    task.name = taskObject._name;
-    task.startTime = taskObject._startTime;
-    task.endTime = taskObject._endTime;
-    task.isActive = taskObject._isActive;
-    task.runningTime = taskObject._runningTime;
-    task.previousRunningTime = taskObject._previousRunningTime;
-    return task;
+    if (this.verifyTaskOptions(taskObject)) {
+      const task = new Task();
+      task.id = taskObject._id;
+      task.name = taskObject._name;
+      task.startTime = taskObject._startTime;
+      task.endTime = taskObject._endTime;
+      task.isActive = taskObject._isActive;
+      task.runningTime = taskObject._runningTime;
+      task.previousRunningTime = taskObject._previousRunningTime;
+      return task;
+    }
   }
 }
