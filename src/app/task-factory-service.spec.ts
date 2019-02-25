@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { TaskFactoryService } from './task-factory-service';
 import { Task } from './models/task';
 
-fdescribe('TaskFactoryService', () => {
+describe('TaskFactoryService', () => {
   let service: TaskFactoryService;
   beforeEach(() => {
     service = new TaskFactoryService();
