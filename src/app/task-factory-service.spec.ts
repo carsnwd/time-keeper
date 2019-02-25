@@ -10,21 +10,19 @@ describe('TaskFactoryService', () => {
 
   it('createTask - should create a new task', () => {
     const task = service.createTask({
-      name: "My Task",
-      color: "#FFFFFF",
-      startTime: new Date(1449848371868),
-      endTime: new Date(1549848371868)
+      name: 'My Task',
+      startTime: 1449848371868,
+      endTime: 1549848371868
     });
-    expect(task.name).toEqual("My Task");
+    expect(task.name).toEqual('My Task');
     expect(task.id).toBeDefined();
-    expect(task.color).toEqual("#FFFFFF");
-    expect(task.startTime).toEqual(new Date(1449848371868));
-    expect(task.endTime).toEqual(new Date(1549848371868));
+    expect(task.startTime).toEqual(1449848371868);
+    expect(task.endTime).toEqual(1549848371868);
   });
 
   it('createTask - should error if missing param', () => {
-    expect(()=>service.createTask({
-      name: "Erm"
+    expect(() => service.createTask({
+      name: 'Erm'
     })).toThrow();
   });
 });

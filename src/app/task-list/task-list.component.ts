@@ -1,5 +1,5 @@
 import { Component, Pipe, PipeTransform, OnInit, OnDestroy } from '@angular/core';
-import { TaskRepositoryServiceService } from '../task-repository-service.service';
+import { TaskRepositoryService } from '../task-repository.service';
 import { TaskFactoryService } from '../task-factory-service';
 import { Task } from '../models/task';
 import { MatDialog } from '@angular/material';
@@ -20,7 +20,7 @@ export class TaskListComponent implements OnInit {
   totalTime: number;
 
   constructor(
-    private taskRepositoryService: TaskRepositoryServiceService,
+    private taskRepositoryService: TaskRepositoryService,
     private taskFactoryService: TaskFactoryService,
     private taskInputDialog: MatDialog) {
     this.tasks = taskRepositoryService.getAllTasks();

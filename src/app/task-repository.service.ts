@@ -6,7 +6,7 @@ import { TaskFactoryService } from './task-factory-service';
 @Injectable({
   providedIn: 'root'
 })
-export class TaskRepositoryServiceService {
+export class TaskRepositoryService {
 
   private LOCAL_STORAGE_TASKS_ID;
   private tasks: object;
