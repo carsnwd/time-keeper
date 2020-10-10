@@ -1,5 +1,7 @@
 # TimeKeeper
 
+A web app to keep track of time spent on tasks. Grew from a need at my day to day job to track how long I was working on particular items and code the hours to charge numbers more specifically. Rather than keeping track of it with notepads.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
 
 ## Development server
